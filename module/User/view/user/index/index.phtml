@@ -1,3 +1,23 @@
 <?php
-?>
+$title = 'My users';
+ $this->headTitle($title);
+?> 
+<h1><?= $this->escapeHtml($title) ?></h1> 
+<p> <a href="<?= $this->url('user', ['action' => 'add']) ?>">Add new user</a> </p>
+ <table class="table">
+    <tr> 
+          <th>Nom</th>
+           <th>Prenom</th>
+            <th>&nbsp;</th> 
+    </tr> 
+    <?php foreach ($users as $user) : ?> 
+    <tr>
+                 <td><?= $this->escapeHtml($user->nom) ?></td> 
+                 <td><?= $this->escapeHtml($user->prenom) ?></td> 
+                 <td> <a href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->id]) ?>">Edit</a>
+                  <a href="<?= $this->url('user', ['action' => 'delete', 'id' => $user->id]) ?>">Delete</a> </td> 
+    </tr> <?php endforeach; ?> 
+</table>
+
 mon module
+

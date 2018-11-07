@@ -16,7 +16,7 @@ class UserTable
 
     public function fetchAll()
     {
-        return $tis->tableGateway->select();
+        return $this->tableGateway->select();
     }
 
 }

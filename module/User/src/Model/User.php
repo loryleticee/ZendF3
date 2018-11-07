@@ -3,16 +3,15 @@ namespace User\Model;
 
 class User
 {
-    protected $id;
-    protected $nom;
-    protected $prenom;
+    public $id;
+    public $nom;
+    public $prenom;
 
   public function exChangeArray(array $data)
   {
-    $this->id = $data['id'];
-    $this->nom = ['nom'];
-    $this->prenom = ['prenom'];
-    $this->email = ['email'];
+    $this->id = $data['id'] ;
+    $this->nom = $data['nom']  ;
+    $this->prenom = $data['prenom'];
   }
 
   public function getId()
@@ -35,9 +34,9 @@ class User
     return $this->prenom;
   }
 
-  public function getEmail()
+  public function sePreNom($prenom)
   {
-    return $this->email;
+    $this->prenom = $prenom;
   }
 }
 ?>

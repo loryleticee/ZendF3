@@ -15,6 +15,8 @@ return [
     'db'=>array(
         'driver'=> 'Pdo',
         'dsn' => 'mysql:dbname=zend;host=localhost',
+        'username' => 'root',
+        'password' => 'root'
     ),
     'service_manager' =>array(
         'factories' => array(
