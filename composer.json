@@ -21,7 +21,12 @@
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-log": "^2.9",
         "zendframework/zend-session": "^2.7.1",
-        "zendframework/zend-servicemanager-di": "^1.0"
+        "zendframework/zend-servicemanager-di": "^1.0",
+        "zendframework/zend-inputfilter": "^2.8",
+        "zendframework/zend-form": "^2.12",
+        "zendframework/zend-i18n": "^2.9",
+        "zendframework/zend-captcha": "^2.8",
+        "zendframework/zendservice-recaptcha": "^3.1"
     },
     "autoload": {
         "psr-4": {

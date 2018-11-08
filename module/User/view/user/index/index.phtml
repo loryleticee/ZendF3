@@ -2,7 +2,7 @@
 $title = 'My users';
  $this->headTitle($title);
 ?> 
-<h1><?= $this->escapeHtml($title) ?></h1> 
+<h1><?= $this->escapeHtml($title);?></h1> 
 <p> <a href="<?= $this->url('user', ['action' => 'add']) ?>">Add new user</a> </p>
  <table class="table">
     <tr> 
