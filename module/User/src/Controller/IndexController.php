@@ -14,6 +14,8 @@ use User\Model\UserTable;
 use User\Model\User;
 use User\Form\UserForm;
 use Zend\Form\View\Helper\FormRow;
+use Zend\Db\Sql\Ddl\Column\Varchar;
+use Zend\Validator\StringLength;
 // use Zend\Form\Element;
 // use Zend\Captcha;
 
@@ -39,7 +41,9 @@ class IndexController extends AbstractActionController
         if (0 === $id) {
             return $this->redirect()->toRoute('user', ['action' => 'add']);
         }
-
+        $userData = $this->table->getUser($id);
+        //$userData =  $userData->prenom; 
+       
         // Retrieve the user with the specified id. Doing so raises
         // an exception if the user is not found, which should result
         // in redirecting to the landing page.
@@ -50,12 +54,12 @@ class IndexController extends AbstractActionController
         }
 
         $form = new UserForm();
-        $form->bind($user);
+        $form->bind($user); 
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'form' => $form];
-
+        $viewData = ['id' => $id, 'form' => $form,'userData' => $userData];
+        
         if (! $request->isPost()) {
             return $viewData;
         }
@@ -63,11 +67,46 @@ class IndexController extends AbstractActionController
         $form->setInputFilter($user->getInputFilter());
         $form->setData($request->getPost());
 
+        //var_dump($user->id);die;
         if (! $form->isValid()) {
+            
             return $viewData;
         }
+       // var_dump($user->id);die;
 
-        $this->table->saveuser($user);
+        // Fix lerreur de user->id = 0 : avant condition isValid $user->id is good, but after $user->id == 0
+        if(0!== $id){
+            $user->id=$id;
+        }
+
+        $validatorNom = new StringLength();
+        $validatorNom
+        ->setOptions(
+            [
+                'min' => 6,
+            ]
+        );
+        $validatorPrenom = new StringLength();
+        $validatorPrenom
+        ->setOptions(
+            [
+                'min' => 3,
+            ]
+        );
+
+        $validatorNom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+        $validatorPrenom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+
+        if($validatorNom->isValid($user->nom) && $validatorPrenom->isValid($user->prenom)){
+
+            $this->table->saveUser($user);
+        }
+        else{
+
+            $validatorNom->getMessages();
+        }
+        
+        //$this->table->saveUser($user);
 
         // Redirect to user list
         return $this->redirect()->toRoute('user', ['action' => 'index']);
@@ -107,8 +146,27 @@ class IndexController extends AbstractActionController
 
     public function deleteAction()
     {
-        return new ViewModel([
-            'users' => $this->table->fetchAll(),
-        ]);
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('user');
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $id = (int) $request->getPost('id');
+                $this->table->deleteUser($id);
+            }
+
+            // Redirect to list of users
+            return $this->redirect()->toRoute('user');
+        }
+
+        return [
+            'id'    => $id,
+            'user' => $this->table->getUser($id),
+        ];
     }
 }

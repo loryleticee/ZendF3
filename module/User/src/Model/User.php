@@ -11,9 +11,10 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\StringLength;
+use Webmozart\Assert\Assert;
 
 class User implements InputFilterAwareInterface
-{
+{   
     public $id;
     public $nom;
     public $prenom;
@@ -23,6 +24,15 @@ class User implements InputFilterAwareInterface
     $this->id = !empty($data['id']) ? $data['id'] : null;
     $this->nom = !empty($data['nom']) ? $data['nom'] : null  ;
     $this->prenom = !empty($data['prenom']) ? $data['prenom'] : null;
+  }
+
+  public function getArrayCopy(){
+
+    return [
+      'id' => $this->id->id,
+      'nom' => $this->nom->nom,
+      'prenom'=> $this->prenom->prenom,
+    ];
   }
 
   public function getId()

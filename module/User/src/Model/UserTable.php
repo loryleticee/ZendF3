@@ -36,13 +36,15 @@ class UserTable
     public function saveUser(User $user)
     {
         $data = [
+            'id' => $user->id,
             'nom' => mb_strtoupper($user->nom,'UTF8'),
             'prenom'  => $user->prenom,
         ];
 
         $id = (int) $user->id;
-
+        
         if ($id === 0) {
+            
             $this->tableGateway->insert($data);
             return;
         }
@@ -53,7 +55,7 @@ class UserTable
                 $id
             ));
         }
-
+       
         $this->tableGateway->update($data, ['id' => $id]);
     }
 
