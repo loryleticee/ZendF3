@@ -79,33 +79,36 @@ class IndexController extends AbstractActionController
             $user->id=$id;
         }
 
-        $validatorNom = new StringLength();
-        $validatorNom
-        ->setOptions(
-            [
-                'min' => 6,
-            ]
-        );
-        $validatorPrenom = new StringLength();
-        $validatorPrenom
-        ->setOptions(
-            [
-                'min' => 3,
-            ]
-        );
+        // $validatorNom = new StringLength();
+        // $validatorNom
+        // ->setOptions(
+        //     [
+        //         'min' => 6,
+        //     ]
+        // );
+        // $validatorPrenom = new StringLength();
+        // $validatorPrenom
+        // ->setOptions(
+        //     [
+        //         'min' => 3,
+        //     ]
+        // );
 
-        $validatorNom->setMessage('Youre string is ', StringLength::TOO_SHORT);
-        $validatorPrenom->setMessage('Youre string is ', StringLength::TOO_SHORT);
-
-        if($validatorNom->isValid($user->nom) && $validatorPrenom->isValid($user->prenom)){
-
-            $this->table->saveUser($user);
-        }
-        else{
-
-            $validatorNom->getMessages();
-        }
+        // $validatorNom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+        // $validatorPrenom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+          
         
+        if($user->validation($user->nom,$user->prenom)){
+
+           $this->table->saveUser($user);
+
+        }
+        // else{
+
+        //     $validatorNom->getMessages();
+        // }
+        
+
         //$this->table->saveUser($user);
 
         // Redirect to user list

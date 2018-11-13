@@ -109,7 +109,44 @@ class User implements InputFilterAwareInterface
         $this->inputFilter = $inputFilter;
 
          return $this->inputFilter; 
-     } 
+     }
+
+     public function validation($nom,$prenom){
+
+          $validatorNom = new StringLength();
+
+          $validatorNom
+          ->setOptions(
+              [
+                  'min' => 6,
+              ]
+          );
+
+          $validatorPrenom = new StringLength();
+
+          $validatorPrenom
+          ->setOptions(
+              [
+                  'min' => 3,
+              ]
+          );
+
+         // $validatorNom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+
+          //$validatorPrenom->setMessage('Youre string is ', StringLength::TOO_SHORT);
+
+          
+          if($validatorNom->isValid($nom) && $validatorPrenom->isValid($prenom)){
+           
+              return [
+                'nom' =>$nom,
+                'prenom' =>$prenom,
+              ];
+          }
+          else{
+            return false;
+          }
+      }
 
 
 
