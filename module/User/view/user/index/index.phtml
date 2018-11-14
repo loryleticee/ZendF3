@@ -5,14 +5,14 @@ $title = 'My users';
 <h1><?= $this->escapeHtml($title);?></h1> 
 <p> <a href="<?= $this->url('user', ['action' => 'add']) ?>">Add new user</a> </p>
 
-<?php if($user){?>
+<?php if(count($users)>0){?>
         <table class="table">
             <tr> 
                 <th>Nom</th>
                 <th>Prenom</th>
                     <th>&nbsp;</th> 
             </tr> 
-            <?php foreach ($users as $user) : ?> 
+            <?php  foreach ($users as $user) : ?> 
             <tr>
                         <td><?= $this->escapeHtml($user->nom) ?></td> 
                         <td><?= $this->escapeHtml($user->prenom) ?></td> 

@@ -31,6 +31,30 @@ public function __construct($name = null) {
         ]
     ]);
     $this->add([
+        'name' => 'email',
+        'type' => 'email',
+        'options' =>['label' => 'Email', ],
+        'attributes' =>[
+            'required'=> 'required'
+        ]
+    ]);
+    $this->add([
+        'name' => 'password',
+        'type' => 'password',
+        'options' =>['label' => 'Mot de passe', ],
+        'attributes' =>[
+            'required'=> 'required'
+        ]
+    ]);
+    $this->add([
+        'name' => 'confirmPassword',
+        'type' => 'password',
+        'options' =>['label' => 'Confirmer le mot de passe', ],
+        'attributes' =>[
+            'required'=> 'required'
+        ]
+    ]);
+    $this->add([
         'name' => 'submit',
         'type' => 'submit',
         'attributes' =>[

@@ -39,6 +39,8 @@ class UserTable
             'id' => $user->id,
             'nom' => mb_strtoupper($user->nom,'UTF8'),
             'prenom'  => $user->prenom,
+            'email'  => $user->email,
+            'password'  => $user->password,
         ];
 
         $id = (int) $user->id;

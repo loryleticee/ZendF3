@@ -3,6 +3,7 @@
 
 $this->headTitle($title); ?>
 <h1><?= $this->escapeHtml($title); ?></h1> 
+<div class = "jumbotron">
 <?php 
 $form->setAttribute('action', $this->url('user', ['action' => 'add']));
 ?>
@@ -12,6 +13,10 @@ echo $this->form()->openTag($form);
 echo $this->formHidden($form->get('id'));
 echo $this->formRow($form->get('nom'));
 echo $this->formRow($form->get('prenom'));
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('password'));
+echo $this->formRow($form->get('confirmPassword'));
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 ?>
+</div>

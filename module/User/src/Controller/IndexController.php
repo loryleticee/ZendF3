@@ -16,6 +16,7 @@ use User\Form\UserForm;
 use Zend\Form\View\Helper\FormRow;
 use Zend\Db\Sql\Ddl\Column\Varchar;
 use Zend\Validator\StringLength;
+use Zend\Crypt\Password\Bcrypt;
 // use Zend\Form\Element;
 // use Zend\Captcha;
 
@@ -135,13 +136,34 @@ class IndexController extends AbstractActionController
         }
 
         $user = new User();
+
         $form->setData($request->getPost());
         
         if(! $form->isValid()){
             return ['form' => $form];
         }
+        // $bcrypt = new Bcrypt();
+        // $securePass = 'the stored bcrypt value';
+        // $password = 'the password to check';
+
+        // if ($bcrypt->verify($password, $securePass)) {
+        //     echo "The password is correct! \n";
+        // } else {
+        //     echo "The password is NOT correct.\n";
+        // }
+        $bcrypt = new Bcrypt();
+        
         $user->exchangeArray($form->getData());
-        $this->table->saveUser($user);
+
+        $securePass = $bcrypt->create($user->password);
+        
+        $user->setPassword($securePass);
+      
+        if($user->validation($user->nom,$user->prenom)){
+
+            $this->table->saveUser($user);
+ 
+         }
         return $this->redirect()->toRoute('home' );
             
         
