@@ -13,6 +13,7 @@ use Zend\View\Model\ViewModel;
 use User\Model\UserTable;
 use User\Model\User;
 use User\Form\UserForm;
+use User\Form\ConnexionForm;
 use Zend\Form\View\Helper\FormRow;
 use Zend\Db\Sql\Ddl\Column\Varchar;
 use Zend\Validator\StringLength;
@@ -35,6 +36,34 @@ class IndexController extends AbstractActionController
         ]);
     }
 
+    public function connexionAction(){
+
+        $form = new ConnexionForm();
+        $vue = new ViewModel([
+           'form'=> $form,
+        ]);
+        $request = $this->getRequest();
+        if(! $request){
+           
+        }else{
+            $email = $request->getPost('email');
+            $password = $request->getPost('password');
+
+            $bcrypt = new Bcrypt();
+            $passwordCrypte = $bcrypt->create($password);
+
+            $user = new User();
+
+            $user = $this->table->getUserByEmail($email);
+            
+            if($bcrypt->verify($password,$user->password)){
+               $this->redirect()->toRoute('user');
+            }
+
+
+        }
+        return $vue->setTemplate("user/index/connexion.phtml");
+    }
     public function editAction()
     {
 
@@ -155,6 +184,7 @@ class IndexController extends AbstractActionController
         
         $user->exchangeArray($form->getData());
 
+        
         $securePass = $bcrypt->create($user->password);
         
         $user->setPassword($securePass);

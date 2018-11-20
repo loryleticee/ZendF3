@@ -32,6 +32,20 @@ class UserTable
 
         return $row;
     }
+    public function getUserByEmail($email)
+    {
+        $email = $email;
+        $rowset = $this->tableGateway->select(['email' => $email]);
+        $row = $rowset->current();
+        /* if (! $row) {
+            throw new RuntimeException(sprintf(
+                'Could not find row with identifier %d',
+                $email
+            ));
+        }
+        */
+        return $row;
+    }
 
     public function saveUser(User $user)
     {
